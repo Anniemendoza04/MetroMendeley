@@ -1,0 +1,34 @@
+<project name="MetroMendeley" default="compilar">
+
+    <property name="src.dir" value="src" />
+    <property name="build.dir" value="build" />
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="jar.file" value="${build.dir}/MetroMendeley.jar" />
+
+    <target name="limpiar">
+        <delete dir="${build.dir}" />
+        <mkdir dir="${build.dir}" />
+    </target>
+
+    <target name="compilar" depends="limpiar">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" source="22" target="22">
+            <compilerarg value="--enable-preview"/>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compilar">
+        <jar destfile="${jar.file}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.metromendeley.Main" />
+                <attribute name="Class-Path" value="." />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="ejecutar" depends="jar">
+        <java jar="${jar.file}" fork="true">
+            <jvmarg value="--enable-preview"/>
+        </java>
+    </target>
+
+</project>
